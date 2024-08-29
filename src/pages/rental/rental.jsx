@@ -26,6 +26,7 @@ import {
   validateNumber,
   validateSelectBox,
 } from "../../utils/cusvalidation";
+// rental file added
 function AddRental() {
   const [propertyid, setPropertyid] = useState("");
   const [unitid, setUnitid] = useState("");
