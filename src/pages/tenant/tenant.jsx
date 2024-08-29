@@ -22,7 +22,7 @@ import { apiRoutes } from "../../utils/PrivateRoute";
 import classes from "./tenantdetail.module.css";
 import { notifications } from "@mantine/notifications";
 import { errors, success } from "../../utils/cusnotification";
-
+// tenant file added
 function AddTenant() {
   const [loading, setLoading] = useState(false);
   const [totalNet, setTotalNet] = useState("");
