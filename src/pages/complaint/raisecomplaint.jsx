@@ -1,3 +1,4 @@
+import React, { useState, useEffect } from "react";
 import {
   Box,
   Container,
@@ -18,9 +19,8 @@ import { CusButton } from "../../components/button";
 import { BASE_URL } from "../../utils/constants";
 import { apiRoutes } from "../../utils/PrivateRoute";
 import { success } from "../../utils/cusnotification";
-import { useState, useEffect } from "react";
 import MantenaceModal from "./maintenanceModel/addmantenance";
-// raise complaint added
+
 function RaiseComplaint() {
   const [reportDate, setReportDate] = useState("");
   const [complaintAbout, setComplaintAbout] = useState("");
@@ -29,12 +29,13 @@ function RaiseComplaint() {
   const [detail, setDetail] = useState("");
   const [raisedby, setRaisedby] = useState("");
   const [file, setFile] = useState(null);
+  const [fileName, setFileName] = useState("");
   const [unit, setUnit] = useState([]);
   const [maintenanceList, setMaintenanceList] = useState([]);
   const [maintenanceOptions, setMaintenanceOptions] = useState([]);
   const [allManager, setAllManager] = useState([]);
+  const [complaintid, setComplaintid] = useState(null);
 
-  const form = useForm({});
   useEffect(() => {
     const currentDate = new Date().toISOString().split("T")[0];
     setReportDate(currentDate);
@@ -45,7 +46,6 @@ function RaiseComplaint() {
           `${BASE_URL}${apiRoutes.getmaintenaces}`
         );
         setMaintenanceOptions(response.data);
-        console.log("maintanousdata:", response.data);
       } catch (error) {
         console.error("Error fetching maintenance options:", error);
       }
@@ -54,18 +54,43 @@ function RaiseComplaint() {
     fetchMaintenanceOptions();
   }, []);
 
-  const handleFileDrop = (files) => {
-    if (files.length > 0) {
-      setFile(files[0]);
-      console.log("Selected file:", files[0]);
+  const ApiCall = async () => {
+    try {
+      const values = {
+        unitid: unitid,
+        serviceid: serviceid,
+        date_of_reporting: reportDate,
+        subject: complaintAbout,
+        detail: detail,
+        raisedby: raisedby,
+      };
+      const response = await axios.post(
+        `${BASE_URL}${apiRoutes.addcomplaint}`,
+        values
+      );
+
+      const complaintId = response.data.complaintId; // Extract the complaint ID from the response
+      setComplaintid(complaintId); // Update the state with the complaint ID
+
+      notifications.show(success.DataInserted);
+      return complaintId; // Return the complaint ID for further use
+    } catch (error) {
+      console.log(error);
     }
   };
 
-  const handleImageUpload = async () => {
+  const handleFileDrop = (files) => {
+    if (files.length > 0) {
+      setFile(files[0]);
+      setFileName(files[0].name); // Set the file name
+    }
+  };
+
+  const handleImageUpload = async (complaintId) => {
     if (!file) {
       notifications.show({
         title: "Error",
-        message: "Please Select the file.",
+        message: "Please select a file.",
         color: "red",
       });
       return null;
@@ -73,6 +98,7 @@ function RaiseComplaint() {
 
     const formData = new FormData();
     formData.append("file", file);
+    formData.append("complaintid", complaintId);
 
     try {
       const response = await axios.post(
@@ -87,6 +113,7 @@ function RaiseComplaint() {
 
       console.log("Server response:", response);
       notifications.show(success.DataInserted);
+      setComplaintid(null);
       setFile(null);
     } catch (error) {
       console.error("Error uploading image:", error);
@@ -95,29 +122,11 @@ function RaiseComplaint() {
     }
   };
 
-  const ApiCall = async () => {
-    try {
-      const values = {
-        unitid: unitid,
-        serviceid: serviceid,
-        date_of_reporting: reportDate,
-        subject: complaintAbout,
-        detail: detail,
-        raisedby: raisedby,
-      };
-      await axios.post(`${BASE_URL}${apiRoutes.addcomplaint}`, values);
-      notifications.show(success.DataInserted);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
   const handleSubmit = async () => {
     try {
-      const imageUploadResult = await handleImageUpload();
-      if (imageUploadResult !== null) {
-        await ApiCall();
-        notifications.show(success.DataInserted);
+      const complaintId = await ApiCall(); // Get the complaint ID after API call
+      if (complaintId) {
+        await handleImageUpload(complaintId); // Pass the complaint ID to the image upload function
       }
     } catch (error) {
       console.error("Error during submission:", error);
@@ -164,12 +173,7 @@ function RaiseComplaint() {
         style={{ borderRadius: "9px" }}
       >
         <Box>
-          <Text
-            fw="700"
-            style={{
-              fontSize: "24px",
-            }}
-          >
+          <Text fw="700" style={{ fontSize: "24px" }}>
             Raise Complaint
           </Text>
         </Box>
@@ -350,7 +354,6 @@ function RaiseComplaint() {
                     onChange={(e) => setRaisedby(e.target.value)}
                   >
                     <option value="">- Select -</option>{" "}
-                    {/* Placeholder option */}
                     {allManager.map((d, i) => (
                       <option key={d.manager.id} value={d.manager.id}>
                         {d.manager.email}
