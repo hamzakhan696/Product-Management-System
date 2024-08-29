@@ -1,8 +1,8 @@
 import React, { useEffect, useState, useRef } from "react";
 import axios from "axios";
 import html2canvas from "html2canvas";
-import pdfMake from "pdfmake/build/pdfmake";
-import pdfFonts from "pdfmake/build/vfs_fonts";
+import jsPDF from "jspdf";
+import "jspdf-autotable";
 import {
   ActionIcon,
   Center,
@@ -13,13 +13,7 @@ import {
   Text,
   TextInput,
 } from "@mantine/core";
-import {
-  IconCopy,
-  IconEdit,
-  IconPlus,
-  IconSearch,
-  IconTrash,
-} from "@tabler/icons-react";
+import { IconCopy, IconPlus, IconSearch, IconTrash } from "@tabler/icons-react";
 import classes from "./rentaldetail.module.css";
 import RentalTable from "../../components/tables/rental/rental.detailtable";
 import { CusMenu } from "../../components/menu";
@@ -31,8 +25,6 @@ import { errors, success } from "../../utils/cusnotification";
 import logo_File from "../../assets/pngs/logo_File.png";
 import bar_png from "../../assets/pngs/bar_png.png";
 import { RentalEditModal } from "./rentalmodel/editrentalmodal";
-
-pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
 function RentalDetail() {
   const [showSearch, setShowSearch] = useState(false);
@@ -114,7 +106,7 @@ function RentalDetail() {
 
     if (selectedData.length > 0) {
       const base64Logo = await convertToBase64(logo_File);
-      const base65Bar = await convertToBase64(bar_png);
+      const base64Bar = await convertToBase64(bar_png);
       const tableContent = selectedData.map((item) => [
         item.rent_amount || "",
         item.overdue_amount || "",
@@ -125,177 +117,68 @@ function RentalDetail() {
 
       const selectedItem = selectedData[0];
 
-      const docDefinition = {
-        content: [
-          {
-            text: "Unique Adventure",
-            style: "header",
-            alignment: "left",
-            margin: [0, 90, 0, 5],
-          },
-          {
-            text: "Busniess Center LLC",
-            style: "subtitle",
-            alignment: "left",
-          },
-          {
-            columns: [
-              [
-                {
-                  text: `Tenant: ${
-                    selectedItem.leasecontract.tenant.frist_name || ""
-                  }`,
-                  style: "titlename",
-                  margin: [0, 20, 0, 10],
-                },
-                {
-                  text: `Email: ${
-                    selectedItem.leasecontract.tenant.email || ""
-                  }`,
-                  style: "titlename",
-                  margin: [0, 0, 0, 10],
-                },
-                {
-                  text: `Phone: ${
-                    selectedItem.leasecontract.tenant.phone || ""
-                  }`,
-                  style: "titlename",
-                  margin: [0, 0, 0, 10],
-                },
-              ],
-              [
-                {
-                  text: `Property: ${
-                    selectedItem.leasecontract.property.name || ""
-                  }`,
-                  style: "titlenameright",
-                  margin: [0, 20, 50, 10],
-                },
-                {
-                  text: `Unit: ${selectedItem.leasecontract.unit.name || ""}`,
-                  style: "titlenameright",
-                  margin: [0, 0, 50, 10],
-                },
-                {
-                  text: `Owner: ${
-                    selectedItem.leasecontract.owner.first_name || ""
-                  }`,
-                  style: "titlenameright",
-                  margin: [0, 0, 50, 10],
-                },
-              ],
-            ],
-            columnGap: 30,
-          },
-          {
-            image: base65Bar,
-            width: 500,
-            height: 15,
-          },
-          {
-            text: "Invoice Rental Detail",
-            style: "header",
-            margin: [0, 40, 0, 20],
-          },
-          {
-            table: {
-              headerRows: 1,
-              widths: ["*", "*", "*", "*", "*"],
-              body: [
-                [
-                  "Rent Amount",
-                  "Overdue Amount",
-                  "Paid Amount",
-                  "Unpaid Amount",
-                  "Status",
-                ],
-                ...tableContent,
-              ],
-            },
-            layout: "lightHorizontalLines",
-            margin: [0, 0, 0, 0],
-          },
-          {
-            canvas: [
-              {
-                type: "rect",
-                x: 350,
-                y: 85,
-                w: 190,
-                h: 40,
-                r: 10,
-                lineWidth: 1,
-                lineColor: "black",
-                shadow: {
-                  x: 3,
-                  y: 3,
-                  color: "rgba(0, 0, 0, 0.5)",
-                  blur: 5,
-                },
-              },
-            ],
-          },
-          {
-            text: `Net Payable: ${selectedItem.net_payable || ""}`,
-            style: "netpayable",
-            absolutePosition: { x: 400, y: 487 },
-          },
-        ],
-        defaultStyle: {
-          fontSize: 12,
-        },
-        styles: {
-          header: {
-            fontSize: 18,
-            bold: true,
-            margin: [0, 0, 0, 10],
-          },
-          netpayable: {
-            fontSize: 15,
-            bold: true,
-            color: "black",
-          },
-          titlename: {
-            fontSize: 12,
-            color: "black",
-            alignment: "left",
-          },
-          titlenameright: {
-            fontSize: 12,
-            color: "black",
-            alignment: "right",
-          },
-          subtitle: {
-            fontSize: 10,
-            color: "black",
-          },
-        },
-        header: function (currentPage, pageCount, pageSize) {
-          return [
-            {
-              columns: [
-                {
-                  image: base64Logo,
-                  width: 100,
-                  height: 100,
-                },
-              ],
-              margin: [40, 10],
-            },
-          ];
-        },
-        footer: function (currentPage, pageCount, pageSize) {
-          return [
-            {
-              text: "Address: ",
-              alignment: "right",
-              margin: [0, 10, 20],
-            },
-          ];
-        },
-      };
+      const doc = new jsPDF();
 
-      pdfMake.createPdf(docDefinition).open();
+      doc.setFontSize(18);
+      doc.text("Unique Adventure", 10, 30);
+      doc.setFontSize(12);
+      doc.text("Business Center LLC", 10, 40);
+
+      doc.addImage(base64Logo, "PNG", 10, 10, 50, 20);
+      doc.addImage(base64Bar, "PNG", 10, 50, 180, 15);
+
+      doc.setFontSize(12);
+      doc.text(
+        `Tenant: ${selectedItem.leasecontract.tenant.frist_name || ""}`,
+        10,
+        80
+      );
+      doc.text(
+        `Email: ${selectedItem.leasecontract.tenant.email || ""}`,
+        10,
+        90
+      );
+      doc.text(
+        `Phone: ${selectedItem.leasecontract.tenant.phone || ""}`,
+        10,
+        100
+      );
+      doc.text(
+        `Property: ${selectedItem.leasecontract.property.name || ""}`,
+        10,
+        110
+      );
+      doc.text(`Unit: ${selectedItem.leasecontract.unit.name || ""}`, 10, 120);
+      doc.text(
+        `Owner: ${selectedItem.leasecontract.owner.first_name || ""}`,
+        10,
+        130
+      );
+
+      doc.text("Invoice Rental Detail", 10, 150);
+
+      doc.autoTable({
+        startY: 160,
+        head: [
+          [
+            "Rent Amount",
+            "Overdue Amount",
+            "Paid Amount",
+            "Unpaid Amount",
+            "Status",
+          ],
+        ],
+        body: tableContent,
+        styles: { valign: "middle" },
+      });
+
+      doc.text(
+        `Net Payable: ${selectedItem.net_payable || ""}`,
+        10,
+        doc.autoTable.previous.finalY + 10
+      );
+
+      doc.save("invoice.pdf");
     } else {
       notifications.show({
         title: "No Selection",

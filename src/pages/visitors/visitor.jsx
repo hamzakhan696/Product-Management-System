@@ -1,26 +1,26 @@
-import React, { useState, useEffect } from "react";
 import {
   Box,
   Container,
   Flex,
   Grid,
+  NumberInput,
+  Select,
   TextInput,
   Input,
   Group,
   Text,
+  Center,
+  Textarea,
 } from "@mantine/core";
 import { CusButton } from "../../components/button";
+import { useForm } from "@mantine/form";
+import { IconHome, IconMail } from "@tabler/icons-react";
 import { BASE_URL } from "../../utils/constants";
 import { apiRoutes } from "../../utils/PrivateRoute";
 import { notifications } from "@mantine/notifications";
-import { success, errors } from "../../utils/cusnotification";
+import { success } from "../../utils/cusnotification";
+import { useEffect, useState } from "react";
 import axios from "axios";
-import {
-  validateEmail,
-  validateName,
-  validateNumber,
-  validateSelectBox,
-} from "../../utils/cusvalidation";
 
 function Visitor() {
   const [firstname, setFirstname] = useState("");
@@ -31,81 +31,68 @@ function Visitor() {
   const [currentDate, setCurrentDate] = useState("");
   const [managerid, setManagerid] = useState("");
   const [unitid, setUnitid] = useState("");
-  const [numberOfVisitors, setNumberOfVisitors] = useState("");
   const [data, setData] = useState([]);
   const [unit, setUnit] = useState([]);
 
-  useEffect(() => {
-    const date = new Date().toLocaleDateString();
-    setCurrentDate(date);
-
-    axios
-      .get(`${BASE_URL}${apiRoutes.allManager}`)
-      .then((res) => setData(res.data))
-      .catch((err) => console.log(err));
-  }, []);
-
-  useEffect(() => {
-    if (managerid) {
-      axios
-        .get(`${BASE_URL}${apiRoutes.getunitByManager}${managerid}`)
-        .then((res) => setUnit(res.data))
-        .catch((err) => console.log(err));
-    }
-  }, [managerid]);
-
-  const handleValidation = (e, validationFn, setFieldState) => {
-    const value = e.target.value;
-    setFieldState(value);
+  const form = useForm({});
+  const propertyAdd = (form) => {
+    console.log(form);
   };
-
-  const handleSubmit = async () => {
-    // Validate all fields before submitting
-    const firstNameError = validateName(firstname);
-    const lastNameError = validateName(lastname);
-    const emailError = validateEmail(email);
-    const contactError = validateNumber(contact);
-    const parkingError = validateSelectBox(parking);
-    const managerIdError = validateSelectBox(managerid);
-    const unitIdError = validateSelectBox(unitid);
-    const numberOfVisitorsError = validateNumber(numberOfVisitors);
-
-    if (
-      firstNameError ||
-      lastNameError ||
-      emailError ||
-      contactError ||
-      parkingError ||
-      managerIdError ||
-      unitIdError ||
-      numberOfVisitorsError
-    ) {
-      notifications.show(errors.ValidationError);
-      return;
-    }
-
+  const ApiCall = async () => {
     try {
       const values = {
-        unitid,
-        managerid,
+        unitid: unitid,
+        managerid: managerid,
         checkin: currentDate,
         visitor: {
           first_name: firstname,
           last_name: lastname,
-          email,
-          contact,
-          parking,
-          number_of_visitors: numberOfVisitors,
+          email: email,
+          contact: contact,
+          parking: parking,
         },
       };
       await axios.post(`${BASE_URL}${apiRoutes.addVisitor}`, values);
       notifications.show(success.DataInserted);
-      window.location.reload();
     } catch (error) {
       console.log(error);
-      notifications.show(errors.DataNotInserted);
     }
   };
+
+  const getCurrentDate = () => {
+    const date = new Date().toLocaleDateString();
+    setCurrentDate(date);
+  };
+
+  useEffect(() => {
+    getCurrentDate();
+  }, []);
+
+  useEffect(() => {
+    axios
+      .get(`${BASE_URL}${apiRoutes.allManager}`)
+      .then((res) => {
+        setData(res.data);
+      })
+      .catch((err) => console.log(err));
+  }, []);
+
+  const getData = async () => {
+    try {
+      const res = await axios.get(
+        `${BASE_URL}${apiRoutes.getunitByManager}${managerid}`
+      );
+      setUnit(res.data);
+    } catch (err) {
+      console.log("Error fetching data:", err);
+    }
+  };
+
+  useEffect(() => {
+    if (managerid) {
+      getData();
+    }
+  }, [managerid]);
 
   return (
     <Container my={66}>
@@ -116,7 +103,12 @@ function Visitor() {
         style={{ borderRadius: "9px" }}
       >
         <Box>
-          <Text fw="700" style={{ fontSize: "24px" }}>
+          <Text
+            fw="700"
+            style={{
+              fontSize: "24px",
+            }}
+          >
             Add Visitors
           </Text>
         </Box>
@@ -150,12 +142,10 @@ function Visitor() {
                       height: "30px",
                       marginRight: "35px",
                     }}
-                    onChange={(e) =>
-                      handleValidation(e, validateSelectBox, setManagerid)
-                    }
+                    onChange={(e) => setManagerid(e.target.value)}
                   >
                     <option>- Select -</option>
-                    {data.map((d) => (
+                    {data.map((d, i) => (
                       <option key={d.id} value={d.id}>
                         {d.first_name}
                       </option>
@@ -174,9 +164,7 @@ function Visitor() {
                     height: "30px",
                     marginLeft: "10px",
                   }}
-                  onChange={(e) =>
-                    handleValidation(e, validateSelectBox, setUnitid)
-                  }
+                  onChange={(e) => setUnitid(e.target.value)}
                 >
                   <option>- Select -</option>
                   {unit.map((d) => (
@@ -199,9 +187,7 @@ function Visitor() {
                       marginRight: "35px",
                     }}
                     value={firstname}
-                    onChange={(e) =>
-                      handleValidation(e, validateName, setFirstname)
-                    }
+                    onChange={(e) => setFirstname(e.target.value)}
                   />
                 </Group>
               </Grid.Col>
@@ -217,9 +203,7 @@ function Visitor() {
                     marginLeft: "10px",
                   }}
                   value={lastname}
-                  onChange={(e) =>
-                    handleValidation(e, validateName, setLastname)
-                  }
+                  onChange={(e) => setLastname(e.target.value)}
                 />
               </Group>
               <Grid.Col span={6}>
@@ -235,9 +219,7 @@ function Visitor() {
                       marginRight: "35px",
                     }}
                     value={email}
-                    onChange={(e) =>
-                      handleValidation(e, validateEmail, setEmail)
-                    }
+                    onChange={(e) => setEmail(e.target.value)}
                   />
                 </Group>
               </Grid.Col>
@@ -246,16 +228,14 @@ function Visitor() {
                   Contact Number <span style={{ color: "red" }}>*</span>{" "}
                 </Text>
                 <TextInput
-                  placeholder="Contact Number"
+                  placeholder=" Contact Number"
                   style={{
                     width: "246px",
                     height: "30px",
                     marginLeft: "10px",
                   }}
                   value={contact}
-                  onChange={(e) =>
-                    handleValidation(e, validateNumber, setContact)
-                  }
+                  onChange={(e) => setContact(e.target.value)}
                 />
               </Group>
               <Grid.Col span={6}>
@@ -271,9 +251,7 @@ function Visitor() {
                       height: "30px",
                       marginRight: "35px",
                     }}
-                    onChange={(e) =>
-                      handleValidation(e, validateSelectBox, setParking)
-                    }
+                    onChange={(e) => setParking(e.target.value)}
                   >
                     <option value={"1"}>Yes</option>
                     <option value={"0"}>No</option>
@@ -291,10 +269,6 @@ function Visitor() {
                     height: "30px",
                     marginLeft: "10px",
                   }}
-                  value={numberOfVisitors}
-                  onChange={(e) =>
-                    handleValidation(e, validateNumber, setNumberOfVisitors)
-                  }
                 />
               </Group>
               <Grid.Col span={6}>
@@ -309,6 +283,7 @@ function Visitor() {
                       marginRight: "35px",
                     }}
                     value={currentDate}
+                    onChange={(e) => setCurrentDate(e.target.value)}
                     readOnly
                   />
                 </Group>
@@ -333,7 +308,6 @@ function Visitor() {
                 height: "34px",
               }}
               value={"Reset"}
-              onClick={() => window.location.reload()}
             />
             <CusButton
               variant="default"
@@ -345,7 +319,7 @@ function Visitor() {
                 height: "34px",
               }}
               value={"Submit"}
-              onClick={handleSubmit}
+              onClick={ApiCall}
             />
           </Group>
         </Box>

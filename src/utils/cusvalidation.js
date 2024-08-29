@@ -4,18 +4,17 @@ Import it -> import { validateEmail, validateName } from './validation'
 Create a Function like handleValidation store the value in the state like 
 const [error , setError ] = useState("")
 const FunctionName = (e) => {
-    const YourfunctionName = e.target.value;
-    setYourFeildState(YourfunctionName);
+    const Error = e.target.value;
+    setYourFeildState(Error);
 
-    if (!setStateofError(YourfunctionName)) {
+    if (!ExportFunctionName(Error)) {
       setError("Please enter a valid email address.");
     } else {
       setError("");
     }
   };
-**/
+****************************************************************************/
 
-/** Add Number Error */
 export const validateNumber = (Number) => {
   return Number > 0 ? "" : "Please fill it .";
 };
@@ -32,3 +31,5 @@ export const validateEmail = (email) => {
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   return emailRegex.test(email) ? "" : "Please enter a valid email address.";
 };
+
+  

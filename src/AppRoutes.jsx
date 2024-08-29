@@ -15,7 +15,7 @@ import OwnerDetail from "./pages/owner/ownerdetail";
 import VacantDetail from "./pages/unit/vacant unit/vacant";
 import OccupiedDetail from "./pages/unit/occupied unit/occupied";
 import RenovationDetail from "./pages/unit/renovation unit/renovation";
-//import ProtectedRoute from "./utils/ProtectedRoute";
+import ProtectedRoute from "./utils/ProtectedRoute";
 import AmenitiesDetail from "./pages/amenities/amenities";
 import AddTenant from "./pages/tenant/tenant";
 import TenantDetail from "./pages/tenant/tenantdetail";
@@ -36,9 +36,9 @@ const AppRoutes = () => {
 
       <Route
         element={
-          // <ProtectedRoute>
-          <Layout />
-          //</ProtectedRoute>
+          <ProtectedRoute>
+            <Layout />
+          </ProtectedRoute>
         }
       >
         <Route path="dashboard" element={<Dashboard />} />

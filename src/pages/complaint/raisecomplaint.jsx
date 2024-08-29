@@ -35,7 +35,7 @@ function RaiseComplaint() {
   const [maintenanceOptions, setMaintenanceOptions] = useState([]);
   const [allManager, setAllManager] = useState([]);
   const [complaintid, setComplaintid] = useState(null);
-
+  console.log(unitid, "unitid");
   useEffect(() => {
     const currentDate = new Date().toISOString().split("T")[0];
     setReportDate(currentDate);

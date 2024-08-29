@@ -25,6 +25,7 @@ import { notifications } from "@mantine/notifications";
 function TenantEditModal({ disabled }) {
   const [opened, { open: openModal, close: closeModal }] = useDisclosure(false);
 
+  // Define state variables for form fields
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [occupation, setOccupation] = useState("");
@@ -50,11 +51,7 @@ function TenantEditModal({ disabled }) {
         setFirstName(tenantData.frist_name || "");
         setLastName(tenantData.last_name || "");
         setOccupation(tenantData.occupation || "");
-
-        const date = new Date(tenantData.date_of_brith);
-        const formattedDate = date.toISOString().slice(0, 16);
-
-        setDateOfBirth(formattedDate);
+        setDateOfBirth(tenantData.date_of_brith || "");
         setEmail(tenantData.email || "");
         setContact(tenantData.contact || null);
 
@@ -67,6 +64,7 @@ function TenantEditModal({ disabled }) {
     }
   };
 
+  // Update tenant data
   const ApiCall = async () => {
     try {
       const selection = localStorage.getItem("Tenantid");
@@ -83,7 +81,7 @@ function TenantEditModal({ disabled }) {
           frist_name: firstName,
           last_name: lastName,
           occupation,
-          date_of_brith: new Date(dateOfBirth).toISOString(),
+          date_of_brith: dateOfBirth,
           email,
           contact,
         };
@@ -176,7 +174,7 @@ function TenantEditModal({ disabled }) {
                 required
                 value={dateOfBirth}
                 onChange={(e) => setDateOfBirth(e.target.value)}
-                type="datetime-local"
+                type="date"
               />
 
               <TextInput
@@ -224,8 +222,10 @@ function TenantEditModal({ disabled }) {
                   width: "150px",
                   flex: "1",
                 }}
-                onClick={ApiCall}
-                value={"Submit"}
+                onClick={() => {
+                  ApiCall(), openModal();
+                }}
+                value={"submit"}
               />
             </Group>
           </Paper>

@@ -55,10 +55,9 @@ export const apiRoutes = {
   addTenants: "tenant",
   getTenants: "tenant/all",
   deleteTenants: "tenant/delete",
-  updateTenants: "tenant/update/",
   getunittenantByproperty: "property/property/unitid/ownerid",
-  getleasedetailBytenantId: "leasecontract/tenant/",
-  getOccupantsByTenantId: "occupants/",
+  getleasedetailBytenantId: `leasecontract/tenant/`,
+  getOccupantsByTenantId: `occupants/`,
   /** Owner */
   addOwner: "owner/add",
   allOwner: "owner",
@@ -72,12 +71,12 @@ export const apiRoutes = {
   getownertenantleaseByUnitId: `leasecontract/unit/`,
   /** Visitor */
   addVisitor: "visit",
-
-  // add maintenous
+  /**Maintaince */
   addmaintenaces: "maintenaceservice",
   getmaintenaces: "maintenaceservice",
-  uploadImage: "complaint-attachments/create/",
   // complaint
   addcomplaint: "complaint",
   getcomplaint: "complaint",
+  /** Uploading */
+  uploadComplaint: "complaint-attachments/create",
 };

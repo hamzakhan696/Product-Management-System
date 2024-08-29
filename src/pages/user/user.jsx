@@ -13,14 +13,19 @@ import { useState, useEffect } from "react";
 import classes from "./user.module.css";
 import { IconSettings } from "@tabler/icons-react";
 import { DropzoneButton } from "../../components/upload/dropzones";
+import axios from "axios";
+import { BASE_URL } from "../../utils/constants";
+import { apiRoutes } from "../../utils/PrivateRoute";
 
 export function UserInfo() {
   const [opened, setOpened] = useState(false);
   const [isEditingName, setIsEditingName] = useState(false);
-  const [name, setName] = useState("Kayan Tahir");
+  const [name, setName] = useState(""); // Initialize name state as an empty string
+  const [data, setData] = useState(null); // State for user data
   const [isEditingAddress, setIsEditingAddress] = useState(false);
-  const [address, setAddress] = useState("Dha phase 1, Lahore Cantt");
+  const [address, setAddress] = useState(""); // Initialize address state as an empty string
   const [avatar, setAvatar] = useState(null);
+  const [loading, setLoading] = useState(true); // Add loading state
 
   // Load the image and name from local storage on component mount
   useEffect(() => {
@@ -32,6 +37,25 @@ export function UserInfo() {
     if (storedName) {
       setName(storedName);
     }
+  }, []);
+
+  // Fetch user data from API and update state
+  const getData = async () => {
+    try {
+      const id = localStorage.getItem("userId");
+      const res = await axios.get(`${BASE_URL}${apiRoutes.getuser}${id}`);
+      setData(res.data);
+      setName(res.data.firstName); // Update name state with API data
+      setAddress(res.data.address || "Dha phase 1, Lahore Cantt"); // Update address state with API data, fallback to default
+    } catch (err) {
+      console.log(err);
+    } finally {
+      setLoading(false); // Set loading to false after data fetch
+    }
+  };
+
+  useEffect(() => {
+    getData();
   }, []);
 
   // Handle image upload and save to local storage in PNG format
@@ -70,11 +94,18 @@ export function UserInfo() {
     }
   };
 
-  // Handle saving the username to local storage
+  // Handle saving the username and address to local storage
   const handleSave = () => {
     localStorage.setItem("name", name);
-    window.location.reload(); // Refresh the page to see the updated information
+    localStorage.setItem("address", address); // Save address to local storage
+    // Ideally, you should also update the database with new name and address
+    window.location.reload();
   };
+
+  // Render loading state
+  if (loading) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <>
@@ -123,17 +154,26 @@ export function UserInfo() {
             </Text>
           )}
 
-          <Text
-            ta="center"
-            fz="sm"
-            c="dimmed"
-            onClick={() => setIsEditingAddress(true)}
-          >
-            <b>Address :</b> {address}
-          </Text>
+          {isEditingAddress ? (
+            <TextInput
+              value={address}
+              onChange={(event) => setAddress(event.currentTarget.value)}
+              onBlur={() => setIsEditingAddress(false)}
+              autoFocus
+            />
+          ) : (
+            <Text
+              ta="center"
+              fz="sm"
+              c="dimmed"
+              onClick={() => setIsEditingAddress(true)}
+            >
+              <b>Address :</b> {address}
+            </Text>
+          )}
 
           <Button
-            onClick={handleSave} // Update this line to use onClick instead of onChange
+            onClick={handleSave} // Save button to handle name and address saving
             fullWidth
             radius="md"
             mt="xl"

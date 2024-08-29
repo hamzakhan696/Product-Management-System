@@ -13,6 +13,7 @@ const VisitorDetailTable = ({
 }) => {
   const rows = data.map((item) => {
     const selected = selection.includes(item.id);
+    // sss
 
     return (
       <Table.Tr

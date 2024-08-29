@@ -21,6 +21,8 @@
     "@tabler/icons-react": "^3.7.0",
     "axios": "^1.7.2",
     "html2canvas": "^1.4.1",
+    "jspdf": "^2.5.1",
+    "jspdf-autotable": "^3.8.2",
     "nestjs-minio": "^2.6.1",
     "pdfmake": "^0.2.12",
     "react": "^18.3.1",

@@ -16,7 +16,7 @@ import { apiRoutes } from "../../utils/PrivateRoute";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { IconChevronDown } from "@tabler/icons-react";
-// property file added
+
 const AddProperty = () => {
   const [name, setName] = useState("");
   const [size, setSize] = useState(0);
@@ -134,55 +134,51 @@ const AddProperty = () => {
       >
         <Flex my={10} direction="row" gap="md" w="100%">
           <Flex my={30} direction="column" gap="md" w="50%">
-            <Flex direction="column" align="start">
-              <Text fw={500} w="100%">
+            <Flex align="center">
+              <Text fw={500} w="30%">
                 Property Name <span style={{ color: "red" }}>*</span>
               </Text>
               <TextInput
-                w="100%"
+                w="50%"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
               />
               {errors.name && <Text color="red">{errors.name}</Text>}
             </Flex>
-
-            <Flex direction="column" align="start">
-              <Text fw={500} w="100%">
+            <Flex align="center">
+              <Text fw={500} w="30%">
                 Size (in Sq. ft.) <span style={{ color: "red" }}>*</span>
               </Text>
               <Input
                 type="number"
-                w="100%"
+                w="50%"
                 value={size}
                 onChange={(e) => setSize(e.target.value)}
                 placeholder="#######"
               />
               {errors.size && <Text color="red">{errors.size}</Text>}
             </Flex>
-
-            <Flex direction="column" align="start">
-              <Text fw={500} w="100%">
+            <Flex align="center">
+              <Text fw={500} w="30%">
                 Location/Area <span style={{ color: "red" }}>*</span>
               </Text>
-              <Input w="100%" placeholder="Add Location" />
+              <Input w="50%" placeholder="Add Location"></Input>
               {errors.location && <Text color="red">{errors.location}</Text>}
             </Flex>
-
-            <Flex direction="column" align="start">
-              <Text fw={500} w="100%">
+            <Flex align="center">
+              <Text fw={500} w="30%">
                 Address <span style={{ color: "red" }}>*</span>
               </Text>
               <TextInput
-                w="100%"
+                w="50%"
                 value={streetAddress}
                 onChange={(e) => setStreetAddress(e.target.value)}
                 placeholder="Street Address"
               />
               {errors.address && <Text color="red">{errors.address}</Text>}
             </Flex>
-
             <Flex ml={20} align="center" direction="column" w="100%">
-              <Flex w="100%" gap="md" direction="row">
+              <Flex w="50%" gap="md" direction="row">
                 <TextInput
                   placeholder="City/District"
                   value={city}
@@ -195,9 +191,8 @@ const AddProperty = () => {
                 />
               </Flex>
             </Flex>
-
             <Flex ml={20} align="center" direction="column" w="100%">
-              <Flex w="100%" gap="md" direction="row">
+              <Flex w="50%" gap="md" direction="row">
                 <TextInput
                   placeholder="Postal Code"
                   value={postalCode}
@@ -211,14 +206,13 @@ const AddProperty = () => {
               </Flex>
             </Flex>
           </Flex>
-
           <Flex direction="column" gap="md" w="50%">
-            <Flex mt={30} direction="column" align="start">
-              <Text fw={500} w="100%">
+            <Flex mt={30} align="center">
+              <Text fw={500} w="30%">
                 Property Type
               </Text>
               <Input
-                w="100%"
+                w="50%"
                 component="select"
                 onChange={(e) => setTypeid(e.target.value)}
               >
@@ -230,28 +224,27 @@ const AddProperty = () => {
                 ))}
               </Input>
             </Flex>
-
-            <Flex direction="column" align="start">
-              <Text fw={500} w="100%">
+            <Flex align="center">
+              <Text fw={500} w="30%">
                 No. of Blocks
               </Text>
               <Input
                 type="number"
-                w="100%"
+                w="50%"
                 placeholder="#######"
                 value={block}
                 onChange={(e) => setBlock(e.target.value)}
               />
             </Flex>
-
-            <Flex direction="column" align="start">
-              <Text fw={500} w="100%">
+            <Flex align="center">
+              <Text fw={500} w="30%">
                 Manager
               </Text>
               <Input
-                w="100%"
+                w="50%"
                 component="select"
                 rightSection={<IconChevronDown size={17} />}
+                pointer
                 placeholder="- Select -"
                 value={managerid}
                 onChange={(e) => {
@@ -269,12 +262,11 @@ const AddProperty = () => {
                 ))}
               </Input>
             </Flex>
-
-            <Flex direction="column" align="start">
-              <Text fw={500} w="100%">
+            <Flex align="center">
+              <Text fw={500} w="30%">
                 Policies
               </Text>
-              <Select w="100%" placeholder="- Select -" />
+              <Select w="50%" placeholder="- Select -" />
             </Flex>
           </Flex>
         </Flex>

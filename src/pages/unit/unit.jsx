@@ -45,6 +45,8 @@ function Addunit() {
     propertyid: "",
     blockid: "",
     name: "",
+    ownerid: "",
+    stateid: "",
   });
 
   console.log(stateid, "Ownerid");
@@ -80,6 +82,26 @@ function Addunit() {
       isValid = false;
     } else {
       setErrors((prevErrors) => ({ ...prevErrors, name: "" }));
+    }
+
+    if (!ownerid) {
+      setErrors((prevErrors) => ({
+        ...prevErrors,
+        owner: "Owner Select is required.",
+      }));
+      isValid = false;
+    } else {
+      setErrors((prevErrors) => ({ ...prevErrors, owner: "" }));
+    }
+
+    if (!stateid) {
+      setErrors((prevErrors) => ({
+        ...prevErrors,
+        Status: "Unit name is required.",
+      }));
+      isValid = false;
+    } else {
+      setErrors((prevErrors) => ({ ...prevErrors, Status: "" }));
     }
 
     return isValid;
@@ -407,7 +429,13 @@ function Addunit() {
                         marginRight: "35px",
                       }}
                       placeholder="- Select -"
-                      onChange={(e) => setOwner(e.target.value)}
+                      onChange={(e) => {
+                        setOwner(e.target.value);
+                        setErrors((prevErrors) => ({
+                          ...prevErrors,
+                          owner: "",
+                        }));
+                      }}
                     >
                       <option>- Select -</option>
                       {allowner.map((owner) => (
@@ -416,6 +444,7 @@ function Addunit() {
                         </option>
                       ))}
                     </Input>
+                    {errors.owner && <Text color="red">{errors.owner}</Text>}
                   </Group>
                 </Grid.Col>
                 <Group mt={20} justify="space-between">
@@ -454,6 +483,7 @@ function Addunit() {
                         </option>
                       ))}
                     </Input>
+                    {errors.Status && <Text color="red">{errors.Status}</Text>}
                   </Group>
                 </Grid.Col>
               </Flex>

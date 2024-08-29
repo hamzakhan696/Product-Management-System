@@ -17,7 +17,10 @@ import { UserInfo } from "../../pages/user/user";
 
 export function HeaderProfile() {
   const navigate = useNavigate();
-  const [data, setData] = useState();
+  const [data, setData] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
+
   const storedAvatar = localStorage.getItem("avatar");
   const getData = async () => {
     try {
@@ -26,6 +29,8 @@ export function HeaderProfile() {
       setData(res.data);
     } catch (err) {
       console.log(err);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -52,6 +57,20 @@ export function HeaderProfile() {
   };
   const handleLogout = () => {};
 
+  const storedName = localStorage.getItem("name");
+
+  // Determine which name to display
+  const displayName = storedName || (data && data.firstName) || "Guest";
+
+  // Render different content based on the state
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div>{error}</div>;
+  }
+
   return (
     <UnstyledButton className={classes.user}>
       <Group justify="center">
@@ -60,7 +79,7 @@ export function HeaderProfile() {
         </Tooltip>
 
         <Text size="md" fw={700}>
-          {localStorage.getItem("name")}
+          {displayName}
         </Text>
 
         <UserInfo />

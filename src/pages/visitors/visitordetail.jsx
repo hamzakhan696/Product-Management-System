@@ -18,7 +18,8 @@ import { apiRoutes } from "../../utils/PrivateRoute";
 import { CusButton } from "../../components/button";
 import { notifications } from "@mantine/notifications";
 import { errors, success } from "../../utils/cusnotification";
-import VisitorDetailTable from "../../components/tables/visitor/visitordetailtable";
+import VisitorDetailTable from "../../components/tables/visitor /visitordetailtable";
+
 function VisitorDetail() {
   const [showSearch, setShowSearch] = useState(false);
   const [query, setQuery] = useState("");

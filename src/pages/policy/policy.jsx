@@ -26,7 +26,7 @@ function Policy() {
   const handleFileDrop = (files) => {
     if (files.length > 0) {
       setFile(files[0]);
-      console.log("Selected file:", files[0]);
+      console.log("Selected file:", files[0]); // Debugging statement
     }
   };
 
@@ -48,7 +48,7 @@ function Policy() {
 
     try {
       const response = await axios.post(
-        "http://192.168.18.156:3000/policy/file",
+        "http://localhost:3000/policy/file",
         formData,
         {
           headers: {

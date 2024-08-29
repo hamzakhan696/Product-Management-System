@@ -16,7 +16,7 @@ import { CusButton } from "../../../components/button";
 import { notifications } from "@mantine/notifications";
 import { errors, success } from "../../../utils/cusnotification";
 import { useDisclosure } from "@mantine/hooks";
-//Changes
+
 function MantenaceModal() {
   const [name, setName] = useState("");
   const [opened, { open: openModal, close: closeModal }] = useDisclosure(false);
