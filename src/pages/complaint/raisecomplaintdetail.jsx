@@ -43,10 +43,15 @@ function RaiseComplaintDetail() {
 
   const getData = async () => {
     try {
-      const res = await axios.get(`${BASE_URL}${apiRoutes}`, {
+      const res = await axios.get(`${BASE_URL}${apiRoutes.getcomplaint}`, {
         withCredentials: true,
       });
-      setData(res.data);
+
+      // Flatten the data
+      const flattenedData = res.data.flatMap((item) => item);
+
+      setData(flattenedData);
+      console.log("Flattened complaint data:", flattenedData);
     } catch (error) {
       console.log("Error fetching data:", error);
     }
@@ -55,7 +60,7 @@ function RaiseComplaintDetail() {
   useEffect(() => {
     getData();
     if (selection) {
-      localStorage.setItem("AmenitiesSelection", selection);
+      localStorage.setItem("ComplaintSelection", selection);
     }
   }, [selection]);
 
