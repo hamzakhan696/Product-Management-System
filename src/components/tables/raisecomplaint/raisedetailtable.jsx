@@ -1,7 +1,8 @@
-import React, { memo } from "react";
-import { Table, Checkbox, Group, Text, ScrollArea } from "@mantine/core";
+import React from "react";
+import { Table, Checkbox, Group, Text, ScrollArea, Image } from "@mantine/core";
 import cx from "clsx";
 import classes from "./raisedetailtable.module.css";
+import { BASE_URL } from "../../../utils/constants";
 
 const RaiseDetailTable = ({
   data,
@@ -11,7 +12,7 @@ const RaiseDetailTable = ({
   scrolled,
   setScrolled,
 }) => {
-  const rows = data.map((item) => {
+  const rows = data.map((item, index) => {
     const selected = selection.includes(item.id);
 
     return (
@@ -28,9 +29,38 @@ const RaiseDetailTable = ({
         <Table.Td>
           <Group gap="sm">
             <Text size="sm" fw={500}>
-              {item.name}{" "}
+              {index + 1}
             </Text>
           </Group>
+        </Table.Td>
+        <Table.Td>
+          <Text size="sm">{item.service?.name || "N/A"}</Text>{" "}
+          {/* Display Service Name */}
+        </Table.Td>
+        <Table.Td>
+          <Text size="sm">
+            {new Date(item.date_of_reporting).toLocaleDateString()}
+          </Text>{" "}
+          {/* Display Date of Reporting */}
+        </Table.Td>
+        <Table.Td>
+          <Text size="sm">{item.subject}</Text> {/* Display Subject */}
+        </Table.Td>
+        <Table.Td>
+          <Text size="sm">{item.detail}</Text> {/* Display Detail */}
+        </Table.Td>
+        <Table.Td>
+          {item.complaintattachments && item.complaintattachments.length > 0 ? (
+            <Image
+              src={`${BASE_URL}${item.complaintattachments[0].url}`}
+              alt={item.complaintattachments[0].name}
+              width={100}
+              height={100}
+              fit="cover"
+            />
+          ) : (
+            <Text size="sm">No Image</Text>
+          )}
         </Table.Td>
       </Table.Tr>
     );
@@ -55,7 +85,12 @@ const RaiseDetailTable = ({
                 }
               />
             </Table.Th>
-            <Table.Th>Amenties</Table.Th>
+            <Table.Th>No</Table.Th>
+            <Table.Th>Service Name</Table.Th>
+            <Table.Th>Date of Reporting</Table.Th>
+            <Table.Th>Subject</Table.Th>
+            <Table.Th>Detail</Table.Th>
+            <Table.Th>Image</Table.Th>
           </Table.Tr>
         </Table.Thead>
         <Table.Tbody>{rows}</Table.Tbody>
