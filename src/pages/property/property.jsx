@@ -16,7 +16,7 @@ import { apiRoutes } from "../../utils/PrivateRoute";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { IconChevronDown } from "@tabler/icons-react";
-
+// property file added
 const AddProperty = () => {
   const [name, setName] = useState("");
   const [size, setSize] = useState(0);
