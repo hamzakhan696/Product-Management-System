@@ -1,0 +1,46 @@
+.search {
+    display: block;
+    margin-top: 5px;
+    width: 429px;
+    height: 44px;
+    padding: 12px, 50px, 12px, 20px;
+  }
+  .search::placeholder {
+    color: black;
+  }
+
+
+
+  .button {
+    width: 147px;
+    height: 44px;
+    border-radius: 8px;
+    padding: 12px;
+    gap: 14px;
+    background-color: #17120f;
+    color: white;
+  }
+  .button:hover {
+    background-color: #17120f;
+    color: white;
+    width: 147px;
+    height: 44px;
+  }
+  
+  .buttonAction {
+      background-color: #FFBC11;
+    }
+
+    .buttonAction:hover { 
+      background-color: #FFBC11;
+    }
+
+
+    .title {
+      font-size: rem(26px);
+      font-weight: 900;
+      font-family:
+        Greycliff CF,
+        var(--mantine-font-family);
+    }
+   

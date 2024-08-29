@@ -1,0 +1,20 @@
+.receiptItem {
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  background-color: #f9f9f9;
+}
+
+.receiptItem:hover {
+  background-color: #e2e6ea;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.selected {
+  background-color: #d0f0c0;
+}
+
+.receiptContainer {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}

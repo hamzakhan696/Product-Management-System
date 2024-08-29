@@ -1,0 +1,43 @@
+.rowSelected {
+  background-color: var(--mantine-color-blue-light);
+}
+
+.header {
+  position: sticky;
+  top: 0;
+  background-color: var(--mantine-color-body);
+  transition: box-shadow 150ms ease;
+  background-color: #ffbc11;
+  border-radius: 9px;
+
+  &::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border-bottom: rem(1px) solid
+      light-dark(var(--mantine-color-gray-2), var(--mantine-color-dark-3));
+  }
+}
+.scrolled {
+  box-shadow: var(--mantine-shadow-sm);
+}
+.receiptItem {
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  background-color: #f9f9f9;
+}
+.receiptItem:hover {
+  background-color: #e2e6ea;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+.selected {
+  background-color: #d0f0c0;
+}
+
+.receiptContainer {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}

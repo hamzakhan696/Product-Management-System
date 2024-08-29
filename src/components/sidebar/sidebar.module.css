@@ -1,0 +1,107 @@
+.navbar {
+  height: 100vh;
+  width: rem(283px);
+  padding: var(--mantine-spacing-md);
+  display: flex;
+  flex-direction: column;
+  background-color: black;
+  align-items: center;
+  overflow-y: auto;
+  scroll-behavior: auto;
+}
+
+.navbarMain {
+  flex: 1;
+}
+
+.header {
+  padding-bottom: var(--mantine-spacing-sm);
+}
+.linksInner {
+  padding-top: var(--mantine-spacing-xl);
+  padding-bottom: var(--mantine-spacing-xl);
+}
+
+.footer {
+  padding-top: var(--mantine-spacing-md);
+  margin-top: var(--mantine-spacing-md);
+}
+
+
+.NavLink {
+  display: inline-flex;
+  align-items: center;
+  color: var(--mantine-color-white);
+  font-weight: 700;
+  padding: var(--mantine-spacing-sm) var(--mantine-spacing-sm);
+  text-decoration: none;
+  line-height: 19px;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+  margin-right: var(--mantine-spacing-sm);
+}
+
+
+.NavLink:hover {
+  background-color: black;
+}
+
+.NavLink:hover .linkIcon {
+  color: #ff9900;
+}
+
+
+/* Sub item  */
+.subItems {
+  margin-left: 20px;
+}
+
+.subLink {
+  display: block;
+  padding: 5px 0;
+  color: white;
+}
+
+.subLink[data-active="true"] {
+  display: none;
+}
+
+/* End sub item */
+
+&[data-active] {
+  &,
+  &:hover {
+    box-shadow: var(--mantine-shadow-sm);
+    background-color: var(--mantine-color-white);
+    color: var(--mantine-color-blue-filled);
+
+    .linkIcon {
+      color: var(--mantine-color-blue-filled);
+    }
+  }
+}
+
+.linkIcon {
+  color: white;
+  margin-right: var(--mantine-spacing-sm);
+  width: rem(25px);
+  height: rem(25px);
+}
+.container {
+  width: 100%;
+  text-align: center; 
+}
+
+.headtext {
+  width: 157px;
+  height: 68px;
+  font-size: 36px;
+  font-weight: 700;
+  text-align: center;
+  line-height: 68px;
+}
+
+.texthead2 {
+  font-size: 24px;
+  font-weight: 700;
+}

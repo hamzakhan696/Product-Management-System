@@ -1,0 +1,20 @@
+.charts {
+  /* width: 84%; */
+  width: 70%;
+  height: 283px;
+  margin-left: 100px;
+}
+
+/* Media Query for responsive design */
+@media (max-width: 600px) {
+  .charts {
+    width: 100%;
+    height: 283px;
+  }
+}
+@media (min-width: 1600px) {
+  charts {
+    width: 84%;
+    height: 283px;
+  }
+}

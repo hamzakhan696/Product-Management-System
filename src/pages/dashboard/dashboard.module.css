@@ -1,0 +1,216 @@
+.search {
+  display: block;
+  margin-top: 5px;
+  width: 429px;
+  height: 44px;
+  padding: 12px, 50px, 12px, 20px;
+}
+.search::placeholder {
+  color: black;
+}
+
+.button {
+  width: 147px;
+  height: 44px;
+  border-radius: 8px;
+  padding: 12px;
+  gap: 14px;
+  background-color: #17120f;
+  color: white;
+}
+.button:hover {
+  background-color: #17120f;
+  color: white;
+  width: 147px;
+  height: 44px;
+}
+
+.buttonAction {
+  &:disabled,
+  &[data-disabled] {
+    border-color: light-dark(
+      var(--mantine-color-gray-3),
+      var(--mantine-color-dark-4)
+    );
+    background-color: transparent;
+  }
+}
+
+.sideIcon {
+  color: #fee095;
+}
+
+.fixedflex {
+  position: absolute;
+  right: 20px;
+  top: 45%;
+  transform: translateY(-50%);
+  gap: 16px;
+  align-items: flex-end;
+  flex-direction: column;
+}
+
+.containerMap {
+  margin-top: 70px;
+}
+
+.PaperAction {
+  width: 450px;
+  height: 170px;
+  box-shadow: 0px 4px 24px rgba(149, 157, 165, 0.1);
+  border-radius: 12px;
+  border: 1px solid #e5e7eb;
+  padding: 24px;
+  overflow: auto;
+}
+.PaperActionChart {
+  width: 500px;
+  height: 20%;
+  box-shadow: 0px 4px 24px rgba(149, 157, 165, 0.1);
+  border-radius: 12px;
+  border: 1px solid #e5e7eb;
+  padding: 24px;
+  overflow: none;
+}
+.PaperActionChart2 {
+  width: 60%;
+  height: 30%;
+  margin-top: 15px;
+  box-shadow: 0px 4px 24px rgba(149, 157, 165, 0.1);
+  border-radius: 12px;
+  border: 1px solid #e5e7eb;
+  padding: 24px;
+  overflow: none;
+}
+.PaperActionQuick {
+  width: 15%;
+  height: 20%;
+  margin-top: 15px;
+  box-shadow: 0px 4px 24px rgba(149, 157, 165, 0.1);
+  border-radius: 12px;
+  border: 1px solid #e5e7eb;
+  padding: 24px;
+  overflow: none;
+}
+/* Media Query for responsive design */
+@media (min-width: 300px) and (max-width: 979px) {
+  .search {
+    width: 60%;
+  }
+
+  .button {
+    width: 100%;
+    margin-top: 10px;
+  }
+  .fixedflex {
+    position: relative;
+    right: 0;
+    top: 0;
+    transform: none;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column-reverse;
+  }
+
+  .containerMap {
+    margin-top: 20px;
+    width: 100%;
+  }
+  .PaperAction {
+    width: 400px;
+    height: 170px;
+    box-shadow: 0px 4px 24px rgba(149, 157, 165, 0.1);
+    border-radius: 12px;
+    border: 1px solid #e5e7eb;
+    padding: 24px;
+    overflow: auto;
+  }
+  .PaperActionChart {
+    width: 200px;
+    height: 20%;
+    box-shadow: 0px 4px 24px rgba(149, 157, 165, 0.1);
+    border-radius: 12px;
+    border: 1px solid #e5e7eb;
+    padding: 24px;
+    overflow: none;
+  }
+  .PaperActionChart2 {
+    width: 60%;
+    height: 30%;
+    margin-top: 15px;
+    box-shadow: 0px 4px 24px rgba(149, 157, 165, 0.1);
+    border-radius: 12px;
+    border: 1px solid #e5e7eb;
+    padding: 24px;
+    overflow: none;
+  }
+  .PaperActionQuick {
+    width: 15%;
+    height: 20%;
+    margin-top: 15px;
+    box-shadow: 0px 4px 24px rgba(149, 157, 165, 0.1);
+    border-radius: 12px;
+    border: 1px solid #e5e7eb;
+    padding: 24px;
+    overflow: none;
+  }
+}
+
+@media (min-width: 1600px) {
+  /* Adjustments for larger screens (e.g., desktops) */
+  .fixedflex {
+    position: absolute;
+    right: 30px;
+    top: 40%;
+    transform: translateY(-50%);
+    gap: 16px;
+    align-items: flex-end;
+    flex-direction: column;
+  }
+
+  .containerMap {
+    margin-top: 70px;
+    width: 100px;
+  }
+
+  .PaperAction {
+    width: 300px;
+    height: 170px;
+    box-shadow: 0px 4px 24px rgba(149, 157, 165, 0.1);
+    border-radius: 12px;
+    border: 1px solid #e5e7eb;
+    padding: 24px;
+    overflow: auto;
+  }
+  .PaperActionChart {
+    width: 200px;
+    height: 20%;
+    box-shadow: 0px 4px 24px rgba(149, 157, 165, 0.1);
+    border-radius: 12px;
+    border: 1px solid #e5e7eb;
+    padding: 24px;
+    overflow: none;
+  }
+  .PaperActionChart2 {
+    width: 60%;
+    height: 30%;
+    margin-top: 15px;
+    box-shadow: 0px 4px 24px rgba(149, 157, 165, 0.1);
+    border-radius: 12px;
+    border: 1px solid #e5e7eb;
+    padding: 24px;
+    overflow: none;
+  }
+  .PaperActionQuick {
+    width: 15%;
+    height: 20%;
+    margin-top: 15px;
+    box-shadow: 0px 4px 24px rgba(149, 157, 165, 0.1);
+    border-radius: 12px;
+    border: 1px solid #e5e7eb;
+    padding: 24px;
+    overflow: none;
+  }
+}
