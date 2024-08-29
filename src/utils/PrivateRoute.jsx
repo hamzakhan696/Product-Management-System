@@ -77,5 +77,7 @@ export const apiRoutes = {
   addmaintenaces: "maintenaceservice",
   getmaintenaces: "maintenaceservice",
   uploadImage: "complaint-attachments/create/",
+  // complaint
   addcomplaint: "complaint",
+  getcomplaint: "complaint",
 };
