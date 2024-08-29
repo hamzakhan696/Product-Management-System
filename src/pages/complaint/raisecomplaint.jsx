@@ -20,7 +20,7 @@ import { apiRoutes } from "../../utils/PrivateRoute";
 import { success } from "../../utils/cusnotification";
 import { useState, useEffect } from "react";
 import MantenaceModal from "./maintenanceModel/addmantenance";
-
+// raise complaint added
 function RaiseComplaint() {
   const [reportDate, setReportDate] = useState("");
   const [complaintAbout, setComplaintAbout] = useState("");
