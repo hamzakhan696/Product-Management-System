@@ -15,16 +15,12 @@ import { apiRoutes } from "../../utils/PrivateRoute";
 import { notifications } from "@mantine/notifications";
 import { success, errors } from "../../utils/cusnotification";
 import axios from "axios";
-// import {
-//   validateFirstName,
-//   validateLastName,
-//   validateEmail,
-//   validateContact,
-//   validateManagerId,
-//   validateUnitId,
-//   validateParking,
-//   validateNumberOfVisitors,
-// } from "../../utils/cusvalidation";
+import {
+  validateEmail,
+  validateName,
+  validateNumber,
+  validateSelectBox,
+} from "../../utils/cusvalidation";
 
 function Visitor() {
   const [firstname, setFirstname] = useState("");
@@ -38,7 +34,6 @@ function Visitor() {
   const [numberOfVisitors, setNumberOfVisitors] = useState("");
   const [data, setData] = useState([]);
   const [unit, setUnit] = useState([]);
-  const [isFormValid, setIsFormValid] = useState(false);
 
   useEffect(() => {
     const date = new Date().toLocaleDateString();
@@ -59,53 +54,35 @@ function Visitor() {
     }
   }, [managerid]);
 
-  const checkIfFormIsValid = () => {
-    const firstNameError = validateFirstName(firstname);
-    const lastNameError = validateLastName(lastname);
-    const emailError = validateEmail(email);
-    const contactError = validateContact(contact);
-    const managerIdError = validateManagerId(managerid);
-    const unitIdError = validateUnitId(unitid);
-    const parkingError = validateParking(parking);
-    const numberOfVisitorsError = validateNumberOfVisitors(numberOfVisitors);
-
-    if (
-      !firstNameError &&
-      !lastNameError &&
-      !emailError &&
-      !contactError &&
-      !managerIdError &&
-      !unitIdError &&
-      !parkingError &&
-      !numberOfVisitorsError
-    ) {
-      setIsFormValid(true);
-    } else {
-      setIsFormValid(false);
-    }
-  };
-
   const handleValidation = (e, validationFn, setFieldState) => {
     const value = e.target.value;
     setFieldState(value);
-    checkIfFormIsValid(); // Check form validity after each change
   };
 
-  useEffect(() => {
-    checkIfFormIsValid();
-  }, [
-    firstname,
-    lastname,
-    email,
-    contact,
-    managerid,
-    unitid,
-    parking,
-    numberOfVisitors,
-  ]);
-
   const handleSubmit = async () => {
-    if (!isFormValid) return;
+    // Validate all fields before submitting
+    const firstNameError = validateName(firstname);
+    const lastNameError = validateName(lastname);
+    const emailError = validateEmail(email);
+    const contactError = validateNumber(contact);
+    const parkingError = validateSelectBox(parking);
+    const managerIdError = validateSelectBox(managerid);
+    const unitIdError = validateSelectBox(unitid);
+    const numberOfVisitorsError = validateNumber(numberOfVisitors);
+
+    if (
+      firstNameError ||
+      lastNameError ||
+      emailError ||
+      contactError ||
+      parkingError ||
+      managerIdError ||
+      unitIdError ||
+      numberOfVisitorsError
+    ) {
+      notifications.show(errors.ValidationError);
+      return;
+    }
 
     try {
       const values = {
@@ -174,7 +151,7 @@ function Visitor() {
                       marginRight: "35px",
                     }}
                     onChange={(e) =>
-                      handleValidation(e, validateManagerId, setManagerid)
+                      handleValidation(e, validateSelectBox, setManagerid)
                     }
                   >
                     <option>- Select -</option>
@@ -198,7 +175,7 @@ function Visitor() {
                     marginLeft: "10px",
                   }}
                   onChange={(e) =>
-                    handleValidation(e, validateUnitId, setUnitid)
+                    handleValidation(e, validateSelectBox, setUnitid)
                   }
                 >
                   <option>- Select -</option>
@@ -223,7 +200,7 @@ function Visitor() {
                     }}
                     value={firstname}
                     onChange={(e) =>
-                      handleValidation(e, validateFirstName, setFirstname)
+                      handleValidation(e, validateName, setFirstname)
                     }
                   />
                 </Group>
@@ -241,7 +218,7 @@ function Visitor() {
                   }}
                   value={lastname}
                   onChange={(e) =>
-                    handleValidation(e, validateLastName, setLastname)
+                    handleValidation(e, validateName, setLastname)
                   }
                 />
               </Group>
@@ -277,7 +254,7 @@ function Visitor() {
                   }}
                   value={contact}
                   onChange={(e) =>
-                    handleValidation(e, validateContact, setContact)
+                    handleValidation(e, validateNumber, setContact)
                   }
                 />
               </Group>
@@ -295,7 +272,7 @@ function Visitor() {
                       marginRight: "35px",
                     }}
                     onChange={(e) =>
-                      handleValidation(e, validateParking, setParking)
+                      handleValidation(e, validateSelectBox, setParking)
                     }
                   >
                     <option value={"1"}>Yes</option>
@@ -316,11 +293,7 @@ function Visitor() {
                   }}
                   value={numberOfVisitors}
                   onChange={(e) =>
-                    handleValidation(
-                      e,
-                      validateNumberOfVisitors,
-                      setNumberOfVisitors
-                    )
+                    handleValidation(e, validateNumber, setNumberOfVisitors)
                   }
                 />
               </Group>
@@ -366,14 +339,13 @@ function Visitor() {
               variant="default"
               type="submit"
               style={{
-                backgroundColor: isFormValid ? "#FFBC11" : "#d1d1d1",
-                color: isFormValid ? "white" : "#636363",
+                backgroundColor: "#FFBC11",
+                color: "white",
                 width: "130px",
                 height: "34px",
               }}
               value={"Submit"}
               onClick={handleSubmit}
-              disabled={!isFormValid}
             />
           </Group>
         </Box>
