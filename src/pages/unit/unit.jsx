@@ -231,13 +231,11 @@ function Addunit() {
           size={"xl"}
           bg={"grey-pms"}
           my="17"
-          h={600}
-          style={{ borderRadius: "9px" }}
+          style={{ borderRadius: "9px", minHeight: "650px" }}
         >
           <Container>
             <Grid>
               <Flex
-                mih={50}
                 mt={32}
                 gap="sm"
                 justify="space-between"

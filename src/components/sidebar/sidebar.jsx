@@ -187,26 +187,26 @@ export function Navbar() {
         <NavLink
           leftSection={<IconUser className={classes.linkIcon} stroke={1.5} />}
           className={classes.NavLink}
-          href=""
           label="Tenant Portal"
+          href="under-development"
         >
           <NavLink
             className={classes.NavLink}
             leftSection={<IconPlus className={classes.linkIcon} stroke={1.5} />}
             label="My Details"
-            href="#required-for-focus"
+            href="under-development"
           />
           <NavLink
             className={classes.NavLink}
             leftSection={<IconHome className={classes.linkIcon} stroke={1.5} />}
             label="Tenants View"
-            href="#required-for-focus"
+            href="under-development"
           />
           <NavLink
             className={classes.NavLink}
             leftSection={<IconCash className={classes.linkIcon} stroke={1.5} />}
             label="My Payment"
-            href="#required-for-focus"
+            href="under-development"
           />
         </NavLink>
         <NavLink
@@ -221,13 +221,15 @@ export function Navbar() {
             className={classes.NavLink}
             leftSection={<IconPlus className={classes.linkIcon} stroke={1.5} />}
             label="Add Staff"
-            href="#required-for-focus"
+            // href="#required-for-focus"
+            href="under-development"
           />
           <NavLink
             className={classes.NavLink}
             leftSection={<IconHome className={classes.linkIcon} stroke={1.5} />}
             label="All Staff"
-            href="#required-for-focus"
+            // href="#required-for-focus"
+            href="under-development"
           />
         </NavLink>
         <NavLink

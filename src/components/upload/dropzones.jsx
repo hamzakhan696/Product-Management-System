@@ -1,25 +1,26 @@
 import { useRef } from "react";
-import { Text, Group, Button, rem, useMantineTheme } from "@mantine/core";
+import { Text, Group, rem, useMantineTheme } from "@mantine/core";
 import { Dropzone, MIME_TYPES } from "@mantine/dropzone";
 import { IconCloudUpload, IconX, IconDownload } from "@tabler/icons-react";
 import classes from "./dropzonebutton.module.css";
 
 export function DropzoneButton({
-  onDrop,
-  accept = [MIME_TYPES.pdf, MIME_TYPES.png],
+  setImage, // Function to update the image state in ComplaintEditModal
+  accept = [MIME_TYPES.pdf, MIME_TYPES.png], // File types allowed
   maxSize = 30 * 1024 ** 2,
   buttonText = "Select files",
   idleText = "Upload resume",
   acceptText = "Drop files here",
   rejectText = "File type not allowed",
+  imageName, // The current image name to display
 }) {
   const theme = useMantineTheme();
   const openRef = useRef(null);
 
-  // Handle drop event
   const handleDrop = (files) => {
-    if (onDrop) {
-      onDrop(files);
+    if (files.length > 0) {
+      const file = files[0];
+      setImage(file);
     }
   };
 
@@ -64,6 +65,13 @@ export function DropzoneButton({
           </Text>
         </div>
       </Dropzone>
+
+      {imageName && (
+        <Text ta="center" mt="sm" fw={500}>
+          Current image: {imageName.name || imageName}{" "}
+          {/* Display the image name */}
+        </Text>
+      )}
     </div>
   );
 }
