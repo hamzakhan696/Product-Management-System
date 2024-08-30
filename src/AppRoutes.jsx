@@ -15,7 +15,7 @@ import OwnerDetail from "./pages/owner/ownerdetail";
 import VacantDetail from "./pages/unit/vacant unit/vacant";
 import OccupiedDetail from "./pages/unit/occupied unit/occupied";
 import RenovationDetail from "./pages/unit/renovation unit/renovation";
-import ProtectedRoute from "./utils/ProtectedRoute";
+// import ProtectedRoute from "./utils/ProtectedRoute";
 import AmenitiesDetail from "./pages/amenities/amenities";
 import AddTenant from "./pages/tenant/tenant";
 import TenantDetail from "./pages/tenant/tenantdetail";
@@ -26,6 +26,7 @@ import RaiseComplaintDetail from "./pages/complaint/raisecomplaintdetail";
 import Visitor from "./pages/visitors/visitor";
 import VisitorDetail from "./pages/visitors/visitordetail";
 import Policy from "./pages/policy/policy";
+import { UnderDevelopment } from "./underdevelopment/underdevelopment";
 
 const AppRoutes = () => {
   return (
@@ -36,9 +37,9 @@ const AppRoutes = () => {
 
       <Route
         element={
-          <ProtectedRoute>
-            <Layout />
-          </ProtectedRoute>
+          // <ProtectedRoute>
+          <Layout />
+          // </ProtectedRoute>
         }
       >
         <Route path="dashboard" element={<Dashboard />} />
@@ -63,6 +64,7 @@ const AppRoutes = () => {
         <Route path="add-visitor" element={<Visitor />} />
         <Route path="visitor-detail" element={<VisitorDetail />} />
         <Route path="add-policy" element={<Policy />} />
+        <Route path="under-development" element={<UnderDevelopment />} />
       </Route>
       <Route path="*" element={<NotFound />} />
     </Routes>

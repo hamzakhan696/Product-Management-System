@@ -12,7 +12,8 @@ const RaiseDetailTable = ({
   scrolled,
   setScrolled,
 }) => {
-  const rows = data.map((item, index) => {
+  const rows = data.flat().map((item, index) => {
+    // Flattening the array if needed
     const selected = selection.includes(item.id);
 
     return (
@@ -36,6 +37,10 @@ const RaiseDetailTable = ({
         <Table.Td>
           <Text size="sm">{item.service?.name || "N/A"}</Text>{" "}
           {/* Display Service Name */}
+        </Table.Td>
+        <Table.Td>
+          <Text size="sm">{item.unit?.name || "N/A"}</Text>{" "}
+          {/* Display Unit Name */}
         </Table.Td>
         <Table.Td>
           <Text size="sm">
@@ -87,6 +92,7 @@ const RaiseDetailTable = ({
             </Table.Th>
             <Table.Th>No</Table.Th>
             <Table.Th>Service Name</Table.Th>
+            <Table.Th>Unit Name</Table.Th> {/* Added Unit Name column */}
             <Table.Th>Date of Reporting</Table.Th>
             <Table.Th>Subject</Table.Th>
             <Table.Th>Detail</Table.Th>

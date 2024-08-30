@@ -58,7 +58,6 @@ export function PropertyEditModal({ disabled }) {
           country: country,
         },
       };
-
       console.log("API Call Payload:", values);
       const id = localStorage.getItem("propertydetailselection");
       await axios.patch(`${BASE_URL}${apiRoutes.updateproperty}${id}`, values);

@@ -77,6 +77,6 @@ export const apiRoutes = {
   // complaint
   addcomplaint: "complaint",
   getcomplaint: "complaint",
-  /** Uploading */
-  uploadComplaint: "complaint-attachments/create",
+  uploadComplaint: "complaint-attachments/",
+  updateComplaint: "complaint/",
 };

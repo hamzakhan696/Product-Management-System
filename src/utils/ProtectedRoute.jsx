@@ -11,8 +11,8 @@ function ProtectedRoute({ children }) {
   useEffect(() => {
     const verifyUser = async () => {
       try {
-        await axios(`${BASE_URL}auth/verify`, { withCredentials: true });
-        setIsAuthenticated(true);
+        await axios(`${BASE_URL}auth/verify`, { withCredentials: false });
+        setIsAuthenticated(false);
       } catch (e) {
         setIsAuthenticated(false);
       } finally {

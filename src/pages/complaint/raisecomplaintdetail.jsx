@@ -25,6 +25,7 @@ import { CusButton } from "../../components/button";
 import { notifications } from "@mantine/notifications";
 import { errors, success } from "../../utils/cusnotification";
 import RaiseDetailTable from "../../components/tables/raisecomplaint/raisedetailtable";
+import { ComplaintEditModal } from "./complaintmodal/editcomplaintmodal";
 
 function RaiseComplaintDetail() {
   const [showSearch, setShowSearch] = useState(false);
@@ -116,7 +117,7 @@ function RaiseComplaintDetail() {
                 onClick={deleteData}
                 leftSection={<IconTrash size="1rem" />}
               />
-              {/* <AmenitiesEditModal disabled={selection.length > 1} /> */}
+              <ComplaintEditModal disabled={selection.length > 1} />
               <CusButton
                 variant="default"
                 type="button"
@@ -138,7 +139,7 @@ function RaiseComplaintDetail() {
                 fontSize: "24px",
               }}
             >
-              All Complaint Raise <span style={{ color: "red" }}>*</span>
+              All Complaint Raise<span style={{ color: "red" }}>*</span>
             </Text>
           )}
           <Group

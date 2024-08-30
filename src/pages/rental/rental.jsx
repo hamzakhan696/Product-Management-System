@@ -9,6 +9,7 @@ import {
   Text,
   Tooltip,
   Radio,
+  Select,
 } from "@mantine/core";
 import { CusButton } from "../../components/button";
 import { isNotEmpty, useForm } from "@mantine/form";
@@ -210,12 +211,7 @@ function AddRental() {
 
   return (
     <Container my={66}>
-      <Container
-        bg={"grey-pms"}
-        h={46}
-        size={"xl"}
-        style={{ borderRadius: "9px" }}
-      >
+      <Container bg={"grey-pms"} style={{ borderRadius: "9px" }}>
         <Box>
           <Text
             fw="700"
@@ -229,16 +225,13 @@ function AddRental() {
       </Container>
       <form onSubmit={form.onSubmit((values) => propertyAdd(values))}>
         <Container
-          size={"xl"}
           bg={"grey-pms"}
           my="17"
-          h={650}
-          style={{ borderRadius: "9px" }}
+          style={{ borderRadius: "9px", minHeight: "650px" }}
         >
           <Container>
             <Grid>
               <Flex
-                mih={50}
                 mt={32}
                 gap="sm"
                 justify="space-between"
